@@ -1273,3 +1273,483 @@ h4, .text-h4 { font-size: 16px; font-weight: 600; line-height: 1.4; }
     transition-duration: 0.01ms !important;
   }
 }
+
+/* =========================================
+   Payment Options, Checkout & Thermal Receipt
+   ========================================= */
+
+.payment-section {
+  margin: 16px var(--page-padding);
+  padding: 20px;
+  background: var(--bg-card);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  border: 1px solid rgba(58, 45, 39, 0.06);
+}
+
+.payment-section__title {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.payment-tabs {
+  display: flex;
+  background: var(--bg-secondary);
+  padding: 4px;
+  border-radius: var(--radius-md);
+  margin-bottom: 16px;
+}
+
+.payment-tab-btn {
+  flex: 1;
+  padding: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-align: center;
+  border-radius: var(--radius-sm);
+  transition: all var(--duration-fast) var(--ease-out);
+}
+
+.payment-tab-btn--active {
+  background: var(--brand-dark);
+  color: var(--brand-cream);
+}
+
+.payment-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.payment-option-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 8px;
+  background: var(--bg-primary);
+  border: 1.5px solid rgba(58, 45, 39, 0.08);
+  border-radius: var(--radius-md);
+  transition: all var(--duration-normal) var(--ease-out);
+  cursor: pointer;
+  position: relative;
+}
+
+.payment-option-card:hover {
+  border-color: var(--brand-gold);
+  background: var(--brand-cream-light);
+}
+
+.payment-option-card--selected {
+  border-color: var(--brand-brown);
+  background: var(--brand-cream-light);
+  box-shadow: 0 0 0 1px var(--brand-brown);
+}
+
+.payment-option-card__logo {
+  font-size: 22px;
+  color: var(--brand-brown);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 24px;
+}
+
+.payment-option-card__name {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-primary);
+  text-align: center;
+}
+
+.payment-option-card__checked {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  font-size: 12px;
+  color: var(--brand-brown);
+}
+
+/* Netbanking Selector */
+.bank-select-container {
+  margin-bottom: 12px;
+}
+
+.bank-select {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1.5px solid rgba(58, 45, 39, 0.12);
+  border-radius: var(--radius-md);
+  background: var(--bg-card);
+  color: var(--text-primary);
+  font-size: 13px;
+  outline: none;
+  cursor: pointer;
+  transition: border-color var(--duration-normal) var(--ease-out);
+}
+
+.bank-select:focus {
+  border-color: var(--brand-gold);
+}
+
+/* Card Checkout Form */
+.card-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.card-form__row {
+  display: flex;
+  gap: 10px;
+}
+
+.card-form__field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+}
+
+.card-form__label {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.card-form__input {
+  width: 100%;
+  padding: 9px 12px;
+  border: 1.5px solid rgba(58, 45, 39, 0.12);
+  border-radius: var(--radius-sm);
+  background: var(--bg-card);
+  font-size: 12px;
+  color: var(--text-primary);
+  outline: none;
+  transition: border-color var(--duration-normal) var(--ease-out);
+}
+
+.card-form__input:focus {
+  border-color: var(--brand-gold);
+}
+
+/* Pay Action Button */
+.pay-btn-container {
+  margin: 16px var(--page-padding) 24px;
+}
+
+.pay-btn {
+  width: 100%;
+  height: 48px;
+  background: var(--brand-brown);
+  color: var(--brand-cream);
+  font-size: 15px;
+  font-weight: 700;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  box-shadow: var(--shadow-md);
+  transition: all var(--duration-normal) var(--ease-out);
+}
+
+.pay-btn:hover:not(:disabled) {
+  background: var(--brand-dark-light);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-lg);
+}
+
+.pay-btn:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.pay-btn:disabled {
+  background: var(--text-muted);
+  color: var(--bg-secondary);
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* Payment Processing Status Indicator */
+.payment-processing-overlay {
+  position: fixed;
+  inset: 0;
+  background: var(--bg-overlay);
+  backdrop-filter: blur(6px);
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--page-padding);
+}
+
+.payment-processing-card {
+  width: 100%;
+  max-width: 320px;
+  background: var(--bg-card);
+  border-radius: var(--radius-lg);
+  padding: 28px 20px;
+  text-align: center;
+  box-shadow: var(--shadow-xl);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+
+.payment-spinner {
+  width: 44px;
+  height: 44px;
+  border: 3.5px solid var(--brand-cream);
+  border-top-color: var(--brand-brown);
+  border-radius: var(--radius-full);
+  animation: payment-spin 1s linear infinite;
+  margin-bottom: 8px;
+}
+
+@keyframes payment-spin {
+  to { transform: rotate(360deg); }
+}
+
+.payment-success-icon {
+  font-size: 56px;
+  color: var(--accent-success);
+  animation: badge-pop 0.4s var(--ease-spring);
+  margin-bottom: 8px;
+}
+
+.payment-processing-title {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.payment-processing-status {
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.4;
+}
+
+/* Receipt Screen Styling */
+.receipt-container {
+  padding: var(--page-padding);
+  background: var(--bg-secondary);
+  min-height: calc(100vh - var(--header-height));
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.receipt-bill {
+  background: var(--bg-card);
+  border-radius: var(--radius-sm);
+  padding: 24px 18px;
+  position: relative;
+  box-shadow: var(--shadow-md);
+  border-left: 1px solid rgba(58, 45, 39, 0.04);
+  border-right: 1px solid rgba(58, 45, 39, 0.04);
+}
+
+.receipt-bill::before,
+.receipt-bill::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 6px;
+  background-size: 12px 6px;
+  background-repeat: repeat-x;
+  z-index: 2;
+}
+
+.receipt-bill::before {
+  top: -3px;
+  background-image: linear-gradient(135deg, var(--bg-secondary) 25%, transparent 25%),
+                    linear-gradient(225deg, var(--bg-secondary) 25%, transparent 25%);
+}
+
+.receipt-bill::after {
+  bottom: -3px;
+  background-image: linear-gradient(45deg, var(--bg-secondary) 25%, transparent 25%),
+                    linear-gradient(-45deg, var(--bg-secondary) 25%, transparent 25%);
+}
+
+.receipt-header {
+  text-align: center;
+  border-bottom: 1.5px dashed var(--text-muted);
+  padding-bottom: 14px;
+  margin-bottom: 14px;
+}
+
+.receipt-header__logo {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-full);
+  margin: 0 auto 6px;
+  border: 1.5px solid var(--brand-gold);
+  object-fit: cover;
+}
+
+.receipt-header__title {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--brand-brown);
+}
+
+.receipt-header__subtitle {
+  font-size: 10.5px;
+  color: var(--text-secondary);
+  margin-top: 4px;
+  line-height: 1.3;
+}
+
+.receipt-meta {
+  font-family: monospace;
+  font-size: 11px;
+  color: var(--text-primary);
+  border-bottom: 1.5px dashed var(--text-muted);
+  padding-bottom: 10px;
+  margin-bottom: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.receipt-meta__row {
+  display: flex;
+  justify-content: space-between;
+}
+
+.receipt-items {
+  border-bottom: 1.5px dashed var(--text-muted);
+  padding-bottom: 10px;
+  margin-bottom: 14px;
+}
+
+.receipt-items__table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.receipt-items__th {
+  font-family: monospace;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-align: left;
+  padding-bottom: 6px;
+  border-bottom: 1px solid rgba(58, 45, 39, 0.08);
+}
+
+.receipt-items__th--right {
+  text-align: right;
+}
+
+.receipt-item-row {
+  font-size: 12.5px;
+  color: var(--text-primary);
+}
+
+.receipt-item-row td {
+  padding: 6px 0;
+  vertical-align: top;
+}
+
+.receipt-item-row__name {
+  font-weight: 500;
+}
+
+.receipt-item-row__qty-price {
+  font-size: 10.5px;
+  color: var(--text-secondary);
+  font-family: monospace;
+}
+
+.receipt-item-row__total {
+  text-align: right;
+  font-weight: 600;
+  font-family: monospace;
+}
+
+.receipt-summary {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  font-family: monospace;
+  font-size: 11.5px;
+  border-bottom: 1.5px dashed var(--text-muted);
+  padding-bottom: 10px;
+  margin-bottom: 14px;
+}
+
+.receipt-summary__row {
+  display: flex;
+  justify-content: space-between;
+}
+
+.receipt-summary__row--grand {
+  font-size: 14.5px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-top: 4px;
+}
+
+.receipt-footer {
+  text-align: center;
+  color: var(--text-secondary);
+  font-size: 11px;
+  font-style: italic;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.paid-stamp {
+  border: 3px double var(--accent-success);
+  border-radius: var(--radius-sm);
+  color: var(--accent-success);
+  font-size: 15px;
+  font-weight: 700;
+  text-transform: uppercase;
+  padding: 3px 10px;
+  letter-spacing: 0.08em;
+  transform: rotate(-6deg);
+  display: inline-block;
+  opacity: 0.85;
+  margin: 10px auto 4px;
+}
+
+.receipt-done-btn {
+  width: 100%;
+  height: 46px;
+  background: var(--brand-brown);
+  color: var(--brand-cream);
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--duration-fast) var(--ease-out);
+  margin-top: 8px;
+}
+
+.receipt-done-btn:hover {
+  background: var(--brand-dark-light);
+}
+
