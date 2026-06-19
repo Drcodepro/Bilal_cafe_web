@@ -9,6 +9,8 @@ import Cart from './pages/Cart';
 import History from './pages/History';
 import Profile from './pages/Profile';
 import Favourites from './pages/Favourites';
+import CartPopupBar from './components/cart/CartPopupBar';
+
 
 /**
  * Page transition wrapper — smooth slide animations between routes.
@@ -50,7 +52,6 @@ function AnimatedRoutes() {
     </AnimatePresence>
   );
 }
-
 export default function App() {
   return (
     <ErrorBoundary>
@@ -59,6 +60,7 @@ export default function App() {
           <BrowserRouter>
             <div className="app-layout">
               <AnimatedRoutes />
+              <CartPopupBar />
               <BottomNav />
             </div>
           </BrowserRouter>
@@ -67,3 +69,4 @@ export default function App() {
     </ErrorBoundary>
   );
 }
+
