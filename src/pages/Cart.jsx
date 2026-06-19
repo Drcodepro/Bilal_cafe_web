@@ -187,11 +187,10 @@ export default function Cart() {
 
     return (
       <>
-        <div className="page-header">
-          <h1 className="page-header__title" style={{ marginLeft: '16px' }}>Invoice Receipt</h1>
-        </div>
-
         <div className="page-content receipt-container">
+          <div className="page-header">
+            <h1 className="page-header__title" style={{ marginLeft: '16px' }}>Invoice Receipt</h1>
+          </div>
           <div className="receipt-bill">
             <div className="receipt-header">
               <img src="/logo.png" alt="Bilal Cafe Logo" className="receipt-header__logo" />

@@ -1,4 +1,5 @@
 import { memo, useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { IoCheckmarkCircle } from 'react-icons/io5';
 import { useCartDispatch } from '../../context/CartContext';
@@ -9,6 +10,7 @@ import { menuItems } from '../../data/menuItems';
  */
 const OrderCard = memo(function OrderCard({ order, index = 0 }) {
   const dispatch = useCartDispatch();
+  const navigate = useNavigate();
 
   const handleReorder = useCallback(() => {
     // Clear cart first, then add order items
@@ -24,7 +26,9 @@ const OrderCard = memo(function OrderCard({ order, index = 0 }) {
         }
       }
     });
-  }, [dispatch, order.items]);
+    // Redirect to cart page with the reordered items
+    navigate('/cart');
+  }, [dispatch, order.items, navigate]);
 
   const formatDate = (dateStr) => {
     const date = new Date(dateStr);

@@ -712,12 +712,6 @@ h4,
   border-bottom: 1px solid rgba(58, 45, 39, 0.08);
 }
 
-@media (min-width: 600px) {
-  .history-page {
-    padding-top: calc(var(--header-height) + 16px) !important;
-  }
-}
-
 .page-header__back {
   width: 36px;
   height: 36px;
@@ -744,7 +738,8 @@ h4,
 /* — Cart Page — */
 .cart-page {
   padding: 0;
-  padding-top: var(--header-height) !important;
+  padding-top: var(--header-height);
+  padding-bottom: calc(var(--bottom-nav-height) + var(--safe-area-bottom) + 16px);
 }
 
 .cart-banner {
@@ -1609,7 +1604,6 @@ h4,
 /* Receipt Screen Styling */
 .receipt-container {
   padding: var(--page-padding);
-  padding-top: calc(var(--header-height) + 16px) !important;
   background: var(--bg-secondary);
   min-height: calc(100vh - var(--header-height));
   display: flex;
@@ -1955,7 +1949,7 @@ h4,
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 16px;
-    padding: 16px var(--page-padding) !important;
+    padding: calc(var(--header-height) + 16px) var(--page-padding) 16px !important;
   }
 
   /* Style cards as boxed grid items on tablet/desktop */

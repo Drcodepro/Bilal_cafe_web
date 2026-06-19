@@ -13,8 +13,8 @@ export default function CartPopupBar() {
   const location = useLocation();
   const { total, totalItems } = useCartSummary();
 
-  // Hide the bar if on the Cart page or if no items are in the cart
-  const isVisible = totalItems > 0 && location.pathname !== '/cart';
+  // Only show the popup bar on the Home page when cart has items
+  const isVisible = totalItems > 0 && location.pathname === '/';
 
   return (
     <AnimatePresence>

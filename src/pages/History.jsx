@@ -17,13 +17,13 @@ export default function History() {
     try {
       const stored = localStorage.getItem('bilal_orders');
       const parsedStored = stored ? JSON.parse(stored) : [];
-      
+
       // Merge static mock orders with dynamic user-placed orders
       const combined = [...parsedStored, ...staticOrders];
-      
+
       // Sort by date descending (newest first)
       combined.sort((a, b) => new Date(b.date) - new Date(a.date));
-      
+
       setOrders(combined);
     } catch (error) {
       console.error('Error reading order history:', error);
