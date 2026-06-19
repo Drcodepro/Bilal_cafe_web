@@ -1,9 +1,9 @@
 import { useState, useCallback, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { 
-  IoArrowBack, 
-  IoQrCodeOutline, 
-  IoCheckmarkCircleSharp, 
+import {
+  IoArrowBack,
+  IoQrCodeOutline,
+  IoCheckmarkCircleSharp,
   IoWalletOutline,
   IoCheckmarkCircle
 } from 'react-icons/io5';
@@ -76,10 +76,10 @@ export default function Cart() {
     if (paymentTab === 'netbanking') return !!selectedBank;
     if (paymentTab === 'card') {
       const cleanNum = cardDetails.number.replace(/\s/g, '');
-      return cleanNum.length === 16 && 
-             cardDetails.expiry.length === 5 && 
-             cardDetails.cvv.length === 3 && 
-             cardDetails.name.trim().length > 2;
+      return cleanNum.length === 16 &&
+        cardDetails.expiry.length === 5 &&
+        cardDetails.cvv.length === 3 &&
+        cardDetails.name.trim().length > 2;
     }
     return false;
   }, [items, paymentTab, selectedUpi, selectedBank, cardDetails]);
@@ -87,22 +87,22 @@ export default function Cart() {
   // Simulate payment processing flow
   const handlePay = () => {
     if (!canPay) return;
-    
+
     setCheckoutStage('processing');
     setProcessingStatus('Securing payment gateway...');
-    
+
     setTimeout(() => {
       setProcessingStatus('Authorizing transaction with bank...');
-      
+
       setTimeout(() => {
         setProcessingStatus('Finalizing secure order...');
-        
+
         setTimeout(() => {
           setProcessingStatus('Payment successful!');
-          
+
           const orderId = `ord-${Math.floor(100000 + Math.random() * 900000)}`;
           const orderNum = `#BKB-${Math.floor(1000 + Math.random() * 9000)}`;
-          
+
           let payLabel = '';
           if (paymentTab === 'upi') {
             const upiNames = { gpay: 'Google Pay', phonepe: 'PhonePe', paytm: 'Paytm', bhim: 'BHIM UPI' };
@@ -113,7 +113,7 @@ export default function Cart() {
           } else {
             payLabel = 'Credit/Debit Card';
           }
-          
+
           const newOrder = {
             id: orderId,
             restaurantName: 'Bilal',
@@ -129,7 +129,7 @@ export default function Cart() {
             paymentMethod: payLabel,
             note: note.trim() || undefined
           };
-          
+
           try {
             const stored = localStorage.getItem('bilal_orders');
             const parsedStored = stored ? JSON.parse(stored) : [];
@@ -137,13 +137,13 @@ export default function Cart() {
           } catch (err) {
             console.error('Failed to save order to local storage', err);
           }
-          
+
           setPlacedOrder(newOrder);
-          
+
           setTimeout(() => {
             setCheckoutStage('receipt');
           }, 800);
-          
+
         }, 1000);
       }, 1000);
     }, 1000);
@@ -187,11 +187,12 @@ export default function Cart() {
 
     return (
       <>
-        <div className="page-header">
-          <h1 className="page-header__title" style={{ marginLeft: '16px' }}>Invoice Receipt</h1>
-        </div>
         <div className="page-content receipt-container">
-          <div className="receipt-bill">
+          <div className="page-header-inline">
+            <h1 className="page-header__title" style={{ marginLeft: '16px' }}>Invoice Receipt</h1>
+          </div>
+          <div className="receipt-content">
+            <div className="receipt-bill">
             <div className="receipt-header">
               <img src="/logo.png" alt="Bilal Cafe Logo" className="receipt-header__logo" />
               <div className="receipt-header__title">Bilal Kebabs & Biryani</div>
@@ -200,7 +201,7 @@ export default function Cart() {
                 Ph: +91 98765 43210
               </div>
             </div>
-            
+
             <div className="receipt-meta">
               <div className="receipt-meta__row">
                 <span>ORDER ID:</span>
@@ -267,31 +268,30 @@ export default function Cart() {
               <div>Visit again to satisfy your Biryani cravings!</div>
             </div>
           </div>
-
           <button className="receipt-done-btn animate-btn" onClick={handleReceiptDone}>
             Done & Return to Home
           </button>
         </div>
+      </div>
       </>
     );
   }
 
   return (
     <>
-      {/* Page Header */}
-      <div className="page-header">
-        <button
-          className="page-header__back"
-          onClick={() => navigate(-1)}
-          type="button"
-          aria-label="Go back"
-        >
-          <IoArrowBack />
-        </button>
-        <h1 className="page-header__title">Cart</h1>
-      </div>
-
       <div className="page-content cart-page">
+        {/* Page Header */}
+        <div className="page-header-inline">
+          <button
+            className="page-header__back"
+            onClick={() => navigate(-1)}
+            type="button"
+            aria-label="Go back"
+          >
+            <IoArrowBack />
+          </button>
+          <h1 className="page-header__title">Cart</h1>
+        </div>
         {items.length > 0 ? (
           <div className="cart-grid">
             <div className="cart-grid__left">
@@ -310,7 +310,7 @@ export default function Cart() {
                 </div>
               ))}
 
-              {/* Note */}
+              {/* Note
               <div className="cart-note">
                 <label className="cart-note__label" htmlFor="order-note">
                   Note
@@ -324,7 +324,8 @@ export default function Cart() {
                   maxLength={500}
                   rows={3}
                 />
-              </div>
+              </div>*/}
+
             </div>
 
             <div className="cart-grid__right">
