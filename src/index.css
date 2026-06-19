@@ -1252,12 +1252,19 @@ h4, .text-h4 { font-size: 16px; font-weight: 600; line-height: 1.4; }
   animation: heartPop 0.4s var(--ease-spring);
 }
 
-/* — Responsive — */
-@media (min-width: 768px) {
+/* — Responsive Layouts — */
+@media (min-width: 600px) {
   :root {
-    --max-width: 480px;
+    --max-width: 720px;
   }
 }
+
+@media (min-width: 1024px) {
+  :root {
+    --max-width: 1100px;
+  }
+}
+
 
 /* Focus visible for accessibility */
 :focus-visible {
@@ -1856,5 +1863,109 @@ h4, .text-h4 { font-size: 16px; font-weight: 600; line-height: 1.4; }
   transform: translateY(0);
 }
 
+/* =========================================
+   Responsive Grid & Widescreen Enhancements
+   ========================================= */
 
+/* Center and align search bar on larger screens */
+@media (min-width: 600px) {
+  .search-bar {
+    max-width: 300px;
+    margin-left: auto;
+  }
+  
+  /* Center category chips bar and allow wrapping */
+  .category-filter {
+    justify-content: center;
+    overflow-x: visible;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
 
+  /* Limit profile menu stretch */
+  .profile-menu {
+    max-width: 560px;
+    margin: 0 auto;
+  }
+}
+
+/* Responsive grid for Food Card lists, Favourites, and History */
+@media (min-width: 600px) {
+  .food-list,
+  .favourites-grid,
+  .history-page {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    padding: 16px var(--page-padding) !important;
+  }
+
+  /* Style cards as boxed grid items on tablet/desktop */
+  .food-list .food-card,
+  .favourites-grid .food-card,
+  .history-page .order-card {
+    border: 1.5px solid rgba(58, 45, 39, 0.08) !important;
+    border-radius: var(--radius-md) !important;
+    background: var(--bg-card) !important;
+    box-shadow: var(--shadow-sm) !important;
+    margin: 0 !important; /* Reset list margins */
+    transition: all var(--duration-normal) var(--ease-out) !important;
+  }
+
+  .food-list .food-card {
+    border-bottom: 1.5px solid rgba(58, 45, 39, 0.08) !important;
+  }
+
+  .food-list .food-card:hover,
+  .favourites-grid .food-card:hover,
+  .history-page .order-card:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: var(--shadow-md) !important;
+    border-color: var(--brand-gold) !important;
+  }
+}
+
+@media (min-width: 1024px) {
+  .food-list,
+  .favourites-grid,
+  .history-page {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+}
+
+/* Responsive Cart Grid (2-column layout on widescreen) */
+@media (min-width: 768px) {
+  .cart-grid {
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: 24px;
+    align-items: start;
+    padding: 16px var(--page-padding) !important;
+  }
+
+  .cart-grid__left {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .cart-grid__right {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    position: sticky;
+    top: calc(var(--header-height) + 16px);
+  }
+
+  /* Remove default margins inside the grid */
+  .cart-banner,
+  .cart-eta,
+  .cart-note,
+  .cart-summary,
+  .payment-section,
+  .pay-btn-container {
+    margin: 0 !important;
+    width: 100% !important;
+  }
+}
