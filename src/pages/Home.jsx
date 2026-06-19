@@ -72,12 +72,13 @@ export default function Home() {
         <CategoryFilter activeCategory={category} onSelect={setCategory} />
 
         {/* Food Items */}
-        <div role="list" aria-label="Menu items">
+        <div className="food-list" role="list" aria-label="Menu items">
           {filteredItems.length > 0 ? (
             filteredItems.map((item, index) => (
               <FoodCard key={item.id} item={item} index={index} />
             ))
           ) : (
+
             <motion.div
               className="empty-state"
               initial={{ opacity: 0, scale: 0.95 }}
