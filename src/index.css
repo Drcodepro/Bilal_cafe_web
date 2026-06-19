@@ -1756,23 +1756,24 @@ h4, .text-h4 { font-size: 16px; font-weight: 600; line-height: 1.4; }
 /* — Floating View Cart Popup Bar — */
 .cart-popup-bar {
   position: fixed;
-  bottom: calc(var(--bottom-nav-height) + 12px + var(--safe-area-bottom));
+  bottom: var(--bottom-nav-height);
   left: 50%;
   transform: translateX(-50%);
-  width: calc(100% - 32px);
-  max-width: 400px;
-  height: 50px;
+  width: 100%;
+  max-width: var(--max-width);
+  height: 52px;
   background: linear-gradient(135deg, var(--brand-brown) 0%, var(--brand-dark-light) 100%);
   color: var(--brand-cream);
-  border-radius: var(--radius-md);
-  padding: 0 14px 0 16px;
+  border-radius: var(--radius-md) var(--radius-md) 0 0;
+  padding: 0 16px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  box-shadow: var(--shadow-lg);
-  border: 1px solid var(--brand-gold);
+  box-shadow: 0 -4px 16px rgba(58, 45, 39, 0.12);
+  border-top: 1px solid var(--brand-gold);
   z-index: 99;
 }
+
 
 .cart-popup-bar__left {
   display: flex;
