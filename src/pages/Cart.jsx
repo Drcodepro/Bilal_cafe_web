@@ -295,205 +295,210 @@ export default function Cart() {
 
       <div className="page-content cart-page">
         {items.length > 0 ? (
-          <>
-            {/* Ordering From Banner */}
-            <motion.div
-              className="cart-banner"
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3 }}
-            >
-              <div className="cart-banner__info">
-                <IoLocationSharp className="cart-banner__icon" />
-                <div className="cart-banner__text">
-                  Ordering from: <strong>Bilal — Mount Road</strong>
+          <div className="cart-grid">
+            <div className="cart-grid__left">
+              {/* Ordering From Banner */}
+              <motion.div
+                className="cart-banner"
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3 }}
+              >
+                <div className="cart-banner__info">
+                  <IoLocationSharp className="cart-banner__icon" />
+                  <div className="cart-banner__text">
+                    Ordering from: <strong>Bilal — Mount Road</strong>
+                  </div>
                 </div>
-              </div>
-              <button className="cart-banner__change" type="button">
-                Change
-              </button>
-            </motion.div>
+                <button className="cart-banner__change" type="button">
+                  Change
+                </button>
+              </motion.div>
 
-            {/* ETA */}
-            <motion.div
-              className="cart-eta"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.1, duration: 0.3 }}
-            >
-              <IoTimeOutline />
-              Estimated Time for Entry in Cafe:
-              <span className="cart-eta__time">11:31 pm</span>
-            </motion.div>
+              {/* ETA */}
+              <motion.div
+                className="cart-eta"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.1, duration: 0.3 }}
+              >
+                <IoTimeOutline />
+                Estimated Time for Entry in Cafe:
+                <span className="cart-eta__time">11:31 pm</span>
+              </motion.div>
 
-            {/* Cart Items by Category */}
-            {Object.keys(categorizedItems).map((cat) => (
-              <div key={cat}>
-                <div className="cart-section-title">
-                  {categoryLabels[cat] || cat}
+              {/* Cart Items by Category */}
+              {Object.keys(categorizedItems).map((cat) => (
+                <div key={cat}>
+                  <div className="cart-section-title">
+                    {categoryLabels[cat] || cat}
+                  </div>
+                  <AnimatePresence mode="popLayout">
+                    {categorizedItems[cat].map((item) => (
+                      <CartItem key={item.id} item={item} />
+                    ))}
+                  </AnimatePresence>
                 </div>
-                <AnimatePresence mode="popLayout">
-                  {categorizedItems[cat].map((item) => (
-                    <CartItem key={item.id} item={item} />
-                  ))}
-                </AnimatePresence>
+              ))}
+
+              {/* Note */}
+              <div className="cart-note">
+                <label className="cart-note__label" htmlFor="order-note">
+                  Note
+                </label>
+                <textarea
+                  id="order-note"
+                  className="cart-note__input"
+                  placeholder="Any special instructions for your order..."
+                  value={note}
+                  onChange={handleNoteChange}
+                  maxLength={500}
+                  rows={3}
+                />
               </div>
-            ))}
-
-            {/* Bill Summary */}
-            <CartSummary />
-
-            {/* Note */}
-            <div className="cart-note">
-              <label className="cart-note__label" htmlFor="order-note">
-                Note
-              </label>
-              <textarea
-                id="order-note"
-                className="cart-note__input"
-                placeholder="Any special instructions for your order..."
-                value={note}
-                onChange={handleNoteChange}
-                maxLength={500}
-                rows={3}
-              />
             </div>
 
-            {/* Payment Section */}
-            <div className="payment-section">
-              <div className="payment-section__title">
-                <IoWalletOutline /> Choose Payment Method
-              </div>
+            <div className="cart-grid__right">
+              {/* Bill Summary */}
+              <CartSummary />
 
-              <div className="payment-tabs">
-                <button
-                  type="button"
-                  className={`payment-tab-btn ${paymentTab === 'upi' ? 'payment-tab-btn--active' : ''}`}
-                  onClick={() => setPaymentTab('upi')}
-                >
-                  UPI
-                </button>
-                <button
-                  type="button"
-                  className={`payment-tab-btn ${paymentTab === 'netbanking' ? 'payment-tab-btn--active' : ''}`}
-                  onClick={() => setPaymentTab('netbanking')}
-                >
-                  Net Banking
-                </button>
-                <button
-                  type="button"
-                  className={`payment-tab-btn ${paymentTab === 'card' ? 'payment-tab-btn--active' : ''}`}
-                  onClick={() => setPaymentTab('card')}
-                >
-                  Card
-                </button>
-              </div>
-
-              {/* UPI Tab */}
-              {paymentTab === 'upi' && (
-                <div className="payment-grid">
-                  {[
-                    { id: 'gpay', name: 'Google Pay' },
-                    { id: 'phonepe', name: 'PhonePe' },
-                    { id: 'paytm', name: 'Paytm' },
-                    { id: 'bhim', name: 'BHIM UPI' }
-                  ].map(app => (
-                    <div
-                      key={app.id}
-                      className={`payment-option-card ${selectedUpi === app.id ? 'payment-option-card--selected' : ''}`}
-                      onClick={() => setSelectedUpi(app.id)}
-                    >
-                      <div className="payment-option-card__logo">
-                        <IoQrCodeOutline />
-                      </div>
-                      <span className="payment-option-card__name">{app.name}</span>
-                      {selectedUpi === app.id && (
-                        <IoCheckmarkCircleSharp className="payment-option-card__checked" />
-                      )}
-                    </div>
-                  ))}
+              {/* Payment Section */}
+              <div className="payment-section" style={{ margin: '16px 0 0 0' }}>
+                <div className="payment-section__title">
+                  <IoWalletOutline /> Choose Payment Method
                 </div>
-              )}
 
-              {/* Net Banking Tab */}
-              {paymentTab === 'netbanking' && (
-                <div className="bank-select-container">
-                  <select
-                    className="bank-select"
-                    value={selectedBank}
-                    onChange={(e) => setSelectedBank(e.target.value)}
+                <div className="payment-tabs">
+                  <button
+                    type="button"
+                    className={`payment-tab-btn ${paymentTab === 'upi' ? 'payment-tab-btn--active' : ''}`}
+                    onClick={() => setPaymentTab('upi')}
                   >
-                    <option value="hdfc">HDFC Bank</option>
-                    <option value="icici">ICICI Bank</option>
-                    <option value="sbi">State Bank of India</option>
-                    <option value="axis">Axis Bank</option>
-                    <option value="kotak">Kotak Mahindra Bank</option>
-                    <option value="pnb">Punjab National Bank</option>
-                  </select>
+                    UPI
+                  </button>
+                  <button
+                    type="button"
+                    className={`payment-tab-btn ${paymentTab === 'netbanking' ? 'payment-tab-btn--active' : ''}`}
+                    onClick={() => setPaymentTab('netbanking')}
+                  >
+                    Net Banking
+                  </button>
+                  <button
+                    type="button"
+                    className={`payment-tab-btn ${paymentTab === 'card' ? 'payment-tab-btn--active' : ''}`}
+                    onClick={() => setPaymentTab('card')}
+                  >
+                    Card
+                  </button>
                 </div>
-              )}
 
-              {/* Card Tab */}
-              {paymentTab === 'card' && (
-                <div className="card-form">
-                  <div className="card-form__field">
-                    <label className="card-form__label">Card Number</label>
-                    <input
-                      type="text"
-                      className="card-form__input"
-                      placeholder="0000 0000 0000 0000"
-                      value={cardDetails.number}
-                      onChange={handleCardNumberChange}
-                    />
+                {/* UPI Tab */}
+                {paymentTab === 'upi' && (
+                  <div className="payment-grid">
+                    {[
+                      { id: 'gpay', name: 'Google Pay' },
+                      { id: 'phonepe', name: 'PhonePe' },
+                      { id: 'paytm', name: 'Paytm' },
+                      { id: 'bhim', name: 'BHIM UPI' }
+                    ].map(app => (
+                      <div
+                        key={app.id}
+                        className={`payment-option-card ${selectedUpi === app.id ? 'payment-option-card--selected' : ''}`}
+                        onClick={() => setSelectedUpi(app.id)}
+                      >
+                        <div className="payment-option-card__logo">
+                          <IoQrCodeOutline />
+                        </div>
+                        <span className="payment-option-card__name">{app.name}</span>
+                        {selectedUpi === app.id && (
+                          <IoCheckmarkCircleSharp className="payment-option-card__checked" />
+                        )}
+                      </div>
+                    ))}
                   </div>
-                  <div className="card-form__row">
+                )}
+
+                {/* Net Banking Tab */}
+                {paymentTab === 'netbanking' && (
+                  <div className="bank-select-container">
+                    <select
+                      className="bank-select"
+                      value={selectedBank}
+                      onChange={(e) => setSelectedBank(e.target.value)}
+                    >
+                      <option value="hdfc">HDFC Bank</option>
+                      <option value="icici">ICICI Bank</option>
+                      <option value="sbi">State Bank of India</option>
+                      <option value="axis">Axis Bank</option>
+                      <option value="kotak">Kotak Mahindra Bank</option>
+                      <option value="pnb">Punjab National Bank</option>
+                    </select>
+                  </div>
+                )}
+
+                {/* Card Tab */}
+                {paymentTab === 'card' && (
+                  <div className="card-form">
                     <div className="card-form__field">
-                      <label className="card-form__label">Expiry Date</label>
+                      <label className="card-form__label">Card Number</label>
                       <input
                         type="text"
                         className="card-form__input"
-                        placeholder="MM/YY"
-                        value={cardDetails.expiry}
-                        onChange={handleCardExpiryChange}
+                        placeholder="0000 0000 0000 0000"
+                        value={cardDetails.number}
+                        onChange={handleCardNumberChange}
                       />
+                    </div>
+                    <div className="card-form__row">
+                      <div className="card-form__field">
+                        <label className="card-form__label">Expiry Date</label>
+                        <input
+                          type="text"
+                          className="card-form__input"
+                          placeholder="MM/YY"
+                          value={cardDetails.expiry}
+                          onChange={handleCardExpiryChange}
+                        />
+                      </div>
+                      <div className="card-form__field">
+                        <label className="card-form__label">CVV</label>
+                        <input
+                          type="password"
+                          className="card-form__input"
+                          placeholder="123"
+                          value={cardDetails.cvv}
+                          onChange={handleCardCvvChange}
+                        />
+                      </div>
                     </div>
                     <div className="card-form__field">
-                      <label className="card-form__label">CVV</label>
+                      <label className="card-form__label">Cardholder Name</label>
                       <input
-                        type="password"
+                        type="text"
                         className="card-form__input"
-                        placeholder="123"
-                        value={cardDetails.cvv}
-                        onChange={handleCardCvvChange}
+                        placeholder="John Doe"
+                        value={cardDetails.name}
+                        onChange={handleCardNameChange}
                       />
                     </div>
                   </div>
-                  <div className="card-form__field">
-                    <label className="card-form__label">Cardholder Name</label>
-                    <input
-                      type="text"
-                      className="card-form__input"
-                      placeholder="John Doe"
-                      value={cardDetails.name}
-                      onChange={handleCardNameChange}
-                    />
-                  </div>
-                </div>
-              )}
-            </div>
+                )}
+              </div>
 
-            {/* Pay Button */}
-            <div className="pay-btn-container">
-              <button
-                type="button"
-                className="pay-btn animate-btn"
-                onClick={handlePay}
-                disabled={!canPay}
-              >
-                Pay ₹{total.toFixed(2)} & Get Bill
-              </button>
+              {/* Pay Button */}
+              <div className="pay-btn-container" style={{ margin: '16px 0 0 0' }}>
+                <button
+                  type="button"
+                  className="pay-btn animate-btn"
+                  onClick={handlePay}
+                  disabled={!canPay}
+                >
+                  Pay ₹{total.toFixed(2)} & Get Bill
+                </button>
+              </div>
             </div>
-          </>
+          </div>
+
         ) : (
           <motion.div
             className="empty-state"
