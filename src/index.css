@@ -478,6 +478,7 @@ h4,
   align-items: flex-start;
   gap: 14px;
   padding: 16px var(--page-padding);
+  margin-bottom: 10px;
   background: var(--bg-card);
   border-bottom: 1px solid rgba(58, 45, 39, 0.06);
   position: relative;
@@ -599,6 +600,7 @@ h4,
   line-height: 1.4;
   display: -webkit-box;
   -webkit-line-clamp: 2;
+  line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
@@ -1191,6 +1193,194 @@ h4,
   margin-left: auto;
   font-size: 16px;
   color: var(--text-muted);
+}
+
+/* — Side Menu Drawer — */
+.side-menu-backdrop {
+  position: fixed;
+  inset: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: var(--max-width);
+  background: rgba(58, 45, 39, 0.4);
+  backdrop-filter: blur(4px);
+  z-index: 1000;
+}
+
+.side-menu-drawer {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: max(0px, calc(50% - var(--max-width) / 2));
+  width: 300px;
+  max-width: 80%;
+  height: 100%;
+  background: var(--bg-card);
+  box-shadow: -4px 0 24px rgba(58, 45, 39, 0.15);
+  z-index: 1001;
+  display: flex;
+  flex-direction: column;
+  border-left: 1px solid rgba(58, 45, 39, 0.08);
+}
+
+.side-menu-drawer__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px var(--page-padding);
+  border-bottom: 1px solid rgba(58, 45, 39, 0.08);
+  background: var(--brand-dark);
+  color: var(--brand-cream);
+}
+
+.side-menu-drawer__title {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--brand-gold);
+}
+
+.side-menu-drawer__close {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-full);
+  font-size: 20px;
+  color: var(--brand-cream);
+  background: rgba(255, 255, 255, 0.1);
+  transition: all var(--duration-fast) var(--ease-out);
+}
+
+.side-menu-drawer__close:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* — Header Profile Button — */
+.header__profile-btn {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-full);
+  font-size: 24px;
+  color: var(--brand-cream);
+  background: rgba(255, 255, 255, 0.08);
+  transition: all var(--duration-fast) var(--ease-out);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.header__profile-btn:hover {
+  background: rgba(255, 255, 255, 0.16);
+  color: var(--brand-gold);
+}
+
+.header__profile-btn:active {
+  transform: scale(0.95);
+}
+
+/* — Header Profile Details Popup Card — */
+.profile-popup-overlay {
+  position: fixed;
+  inset: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: var(--max-width);
+  background: rgba(58, 45, 39, 0.4);
+  backdrop-filter: blur(4px);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.profile-popup-card {
+  width: 100%;
+  max-width: 300px;
+  background: var(--bg-card);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  box-shadow: var(--shadow-xl);
+  border: 1px solid rgba(58, 45, 39, 0.08);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.profile-popup-card__header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.profile-popup-card__avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-full);
+  border: 2px solid var(--brand-gold);
+  object-fit: cover;
+  background: var(--brand-dark-light);
+}
+
+.profile-popup-card__title {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--brand-brown);
+}
+
+.profile-popup-card__details {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 8px 0;
+  border-top: 1px solid rgba(58, 45, 39, 0.06);
+  border-bottom: 1px solid rgba(58, 45, 39, 0.06);
+}
+
+.profile-popup-card__detail-item {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.profile-popup-card__label {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.profile-popup-card__value {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.profile-popup-card__close-btn {
+  width: 100%;
+  height: 40px;
+  background: var(--brand-brown);
+  color: var(--brand-cream);
+  font-size: 13.5px;
+  font-weight: 600;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--duration-fast) var(--ease-out);
+}
+
+.profile-popup-card__close-btn:hover {
+  background: var(--brand-dark-light);
 }
 
 /* — Error Boundary — */

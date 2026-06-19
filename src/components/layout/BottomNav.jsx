@@ -2,7 +2,7 @@ import { NavLink } from 'react-router-dom';
 import { IoHome, IoHomeOutline } from 'react-icons/io5';
 import { IoTimeOutline, IoTime } from 'react-icons/io5';
 import { IoCartOutline, IoCart } from 'react-icons/io5';
-import { IoPersonOutline, IoPerson } from 'react-icons/io5';
+import { IoMenuOutline, IoMenu } from 'react-icons/io5';
 import { useCartSummary } from '../../context/CartContext';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -26,19 +26,12 @@ const navItems = [
     iconInactive: IoCartOutline,
     showBadge: true,
   },
-  {
-    to: '/profile',
-    label: 'Profile',
-    iconActive: IoPerson,
-    iconInactive: IoPersonOutline,
-  },
 ];
 
 /**
- * Bottom navigation — 4 tabs (Home, History, Cart, Profile).
- * Payments tab intentionally excluded per requirements.
+ * Bottom navigation — 4 tabs (Home, History, Cart, Menu).
  */
-export default function BottomNav() {
+export default function BottomNav({ isMenuOpen, onMenuToggle }) {
   const { totalItems } = useCartSummary();
 
   return (
@@ -77,6 +70,20 @@ export default function BottomNav() {
           )}
         </NavLink>
       ))}
+
+      <button
+        type="button"
+        onClick={onMenuToggle}
+        className={`bottom-nav__item ${isMenuOpen ? 'bottom-nav__item--active' : ''}`}
+        aria-label="Menu"
+        id="nav-menu"
+        style={{ background: 'none', border: 'none', cursor: 'pointer', outline: 'none' }}
+      >
+        <span className="bottom-nav__icon">
+          {isMenuOpen ? <IoMenu /> : <IoMenuOutline />}
+        </span>
+        <span>Menu</span>
+      </button>
     </nav>
   );
 }
