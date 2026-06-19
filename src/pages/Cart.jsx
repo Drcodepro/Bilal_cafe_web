@@ -2,8 +2,6 @@ import { useState, useCallback, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { 
   IoArrowBack, 
-  IoLocationSharp, 
-  IoTimeOutline, 
   IoQrCodeOutline, 
   IoCheckmarkCircleSharp, 
   IoWalletOutline,
@@ -297,35 +295,6 @@ export default function Cart() {
         {items.length > 0 ? (
           <div className="cart-grid">
             <div className="cart-grid__left">
-              {/* Ordering From Banner */}
-              <motion.div
-                className="cart-banner"
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.3 }}
-              >
-                <div className="cart-banner__info">
-                  <IoLocationSharp className="cart-banner__icon" />
-                  <div className="cart-banner__text">
-                    Ordering from: <strong>Bilal — Mount Road</strong>
-                  </div>
-                </div>
-                <button className="cart-banner__change" type="button">
-                  Change
-                </button>
-              </motion.div>
-
-              {/* ETA */}
-              <motion.div
-                className="cart-eta"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.1, duration: 0.3 }}
-              >
-                <IoTimeOutline />
-                Estimated Time for Entry in Cafe:
-                <span className="cart-eta__time">11:31 pm</span>
-              </motion.div>
 
               {/* Cart Items by Category */}
               {Object.keys(categorizedItems).map((cat) => (
