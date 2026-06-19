@@ -34,24 +34,26 @@ export default function History() {
 
   return (
     <>
-      {/* Page Header */}
-      <div className="page-header">
-        <button
-          className="page-header__back"
-          onClick={() => navigate(-1)}
-          type="button"
-          aria-label="Go back"
-        >
-          <IoArrowBack />
-        </button>
-        <h1 className="page-header__title">History</h1>
-      </div>
+      <div className="page-content history-container">
+        {/* Page Header */}
+        <div className="page-header-inline">
+          <button
+            className="page-header__back"
+            onClick={() => navigate(-1)}
+            type="button"
+            aria-label="Go back"
+          >
+            <IoArrowBack />
+          </button>
+          <h1 className="page-header__title">History</h1>
+        </div>
 
-      <div className="page-content history-page">
         {orders.length > 0 ? (
-          orders.map((order, index) => (
-            <OrderCard key={order.id} order={order} index={index} />
-          ))
+          <div className="history-page">
+            {orders.map((order, index) => (
+              <OrderCard key={order.id} order={order} index={index} />
+            ))}
+          </div>
         ) : (
           <motion.div
             className="empty-state"
