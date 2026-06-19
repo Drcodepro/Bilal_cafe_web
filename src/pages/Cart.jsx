@@ -187,12 +187,12 @@ export default function Cart() {
 
     return (
       <>
+        <div className="page-header">
+          <h1 className="page-header__title" style={{ marginLeft: '16px' }}>Invoice Receipt</h1>
+        </div>
+
         <div className="page-content receipt-container">
-          <div className="page-header-inline">
-            <h1 className="page-header__title" style={{ marginLeft: '16px' }}>Invoice Receipt</h1>
-          </div>
-          <div className="receipt-content">
-            <div className="receipt-bill">
+          <div className="receipt-bill">
             <div className="receipt-header">
               <img src="/logo.png" alt="Bilal Cafe Logo" className="receipt-header__logo" />
               <div className="receipt-header__title">Bilal Kebabs & Biryani</div>
@@ -268,30 +268,31 @@ export default function Cart() {
               <div>Visit again to satisfy your Biryani cravings!</div>
             </div>
           </div>
+
           <button className="receipt-done-btn animate-btn" onClick={handleReceiptDone}>
             Done & Return to Home
           </button>
         </div>
-      </div>
       </>
     );
   }
 
   return (
     <>
+      {/* Page Header */}
+      <div className="page-header">
+        <button
+          className="page-header__back"
+          onClick={() => navigate(-1)}
+          type="button"
+          aria-label="Go back"
+        >
+          <IoArrowBack />
+        </button>
+        <h1 className="page-header__title">Cart</h1>
+      </div>
+
       <div className="page-content cart-page">
-        {/* Page Header */}
-        <div className="page-header-inline">
-          <button
-            className="page-header__back"
-            onClick={() => navigate(-1)}
-            type="button"
-            aria-label="Go back"
-          >
-            <IoArrowBack />
-          </button>
-          <h1 className="page-header__title">Cart</h1>
-        </div>
         {items.length > 0 ? (
           <div className="cart-grid">
             <div className="cart-grid__left">
