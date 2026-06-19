@@ -1,6 +1,6 @@
 import { useLocation, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { IoArrowForward, IoCart } from 'react-icons/io5';
+import { IoCart } from 'react-icons/io5';
 import { useCartSummary } from '../../context/CartContext';
 
 /**
@@ -25,7 +25,6 @@ export default function CartPopupBar() {
           animate={{ opacity: 1, y: 0, scale: 1 }}
           exit={{ opacity: 0, y: 40, scale: 0.95 }}
           transition={{ type: 'spring', stiffness: 260, damping: 20 }}
-          onClick={() => navigate('/cart')}
         >
           <div className="cart-popup-bar__left">
             <div className="cart-popup-bar__icon-wrap">
@@ -41,12 +40,16 @@ export default function CartPopupBar() {
             </div>
           </div>
 
-          <div className="cart-popup-bar__right">
-            <span>View Cart</span>
-            <IoArrowForward className="cart-popup-bar__arrow" />
-          </div>
+          <button
+            className="cart-popup-bar__btn animate-btn"
+            onClick={() => navigate('/cart')}
+            type="button"
+          >
+            View Cart
+          </button>
         </motion.div>
       )}
     </AnimatePresence>
   );
 }
+
