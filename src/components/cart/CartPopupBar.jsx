@@ -1,0 +1,52 @@
+import { useLocation, useNavigate } from 'react-router-dom';
+import { motion, AnimatePresence } from 'framer-motion';
+import { IoArrowForward, IoCart } from 'react-icons/io5';
+import { useCartSummary } from '../../context/CartContext';
+
+/**
+ * CartPopupBar — a floating card at the bottom of the screen (above BottomNav)
+ * that appears when items are added to the cart, prompting the user to view cart.
+ * Hidden on the Cart page itself.
+ */
+export default function CartPopupBar() {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { total, totalItems } = useCartSummary();
+
+  // Hide the bar if on the Cart page or if no items are in the cart
+  const isVisible = totalItems > 0 && location.pathname !== '/cart';
+
+  return (
+    <AnimatePresence>
+      {isVisible && (
+        <motion.div
+          className="cart-popup-bar"
+          initial={{ opacity: 0, y: 50, scale: 0.95 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          exit={{ opacity: 0, y: 40, scale: 0.95 }}
+          transition={{ type: 'spring', stiffness: 260, damping: 20 }}
+          onClick={() => navigate('/cart')}
+        >
+          <div className="cart-popup-bar__left">
+            <div className="cart-popup-bar__icon-wrap">
+              <IoCart className="cart-popup-bar__icon" />
+              <span className="cart-popup-bar__badge">{totalItems}</span>
+            </div>
+            <div className="cart-popup-bar__text">
+              <span className="cart-popup-bar__count">
+                {totalItems} Item{totalItems > 1 ? 's' : ''}
+              </span>
+              <span className="cart-popup-bar__divider">|</span>
+              <span className="cart-popup-bar__total">₹{total.toFixed(2)}</span>
+            </div>
+          </div>
+
+          <div className="cart-popup-bar__right">
+            <span>View Cart</span>
+            <IoArrowForward className="cart-popup-bar__arrow" />
+          </div>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
+}
