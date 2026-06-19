@@ -18,20 +18,20 @@ export default function Favourites() {
 
   return (
     <>
-      {/* Page Header */}
-      <div className="page-header">
-        <button
-          className="page-header__back"
-          onClick={() => navigate(-1)}
-          type="button"
-          aria-label="Go back"
-        >
-          <IoArrowBack />
-        </button>
-        <h1 className="page-header__title">Favourites</h1>
-      </div>
+      <div className="page-content favourites-page">
+        {/* Page Header */}
+        <div className="page-header-inline">
+          <button
+            className="page-header__back"
+            onClick={() => navigate(-1)}
+            type="button"
+            aria-label="Go back"
+          >
+            <IoArrowBack />
+          </button>
+          <h1 className="page-header__title">Favourites</h1>
+        </div>
 
-      <div className="page-content">
         {favouriteItems.length > 0 ? (
           <div className="favourites-grid" role="list" aria-label="Favourite items">
             {favouriteItems.map((item, index) => (
