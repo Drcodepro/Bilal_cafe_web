@@ -47,7 +47,7 @@ export default function History() {
         <h1 className="page-header__title">History</h1>
       </div>
 
-      <div className="page-content">
+      <div className="page-content history-page">
         {orders.length > 0 ? (
           orders.map((order, index) => (
             <OrderCard key={order.id} order={order} index={index} />
