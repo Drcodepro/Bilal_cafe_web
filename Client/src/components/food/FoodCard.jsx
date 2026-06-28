@@ -3,18 +3,25 @@ import { IoHeart, IoHeartOutline, IoStar } from 'react-icons/io5';
 import { motion } from 'framer-motion';
 import { useFavourites } from '../../context/FavouritesContext';
 import { useCartDispatch, useItemQuantity } from '../../context/CartContext';
+import { useLocation } from '../../context/LocationContext';
 
 /**
  * FoodCard — displays a single menu item with:
  * - Image with favourite toggle
  * - Veg/non-veg indicator, name, description, rating
  * - Price with Add button / quantity stepper
+ * - Stock availability badge (low stock / out of stock)
  */
 const FoodCard = memo(function FoodCard({ item, index = 0 }) {
   const { toggleFavourite, isFavourite } = useFavourites();
   const dispatch = useCartDispatch();
   const quantity = useItemQuantity(item.id);
   const [heartAnimating, setHeartAnimating] = useState(false);
+  const { getStock, isLowStock, isOutOfStock } = useLocation();
+
+  const stock = getStock(item.id);
+  const lowStock = isLowStock(item.id);
+  const outOfStock = isOutOfStock(item.id);
 
   const fav = isFavourite(item.id);
 
@@ -25,12 +32,14 @@ const FoodCard = memo(function FoodCard({ item, index = 0 }) {
   }, [item.id, toggleFavourite]);
 
   const handleAdd = useCallback(() => {
+    if (outOfStock || quantity >= stock) return;
     dispatch({ type: 'ADD_ITEM', payload: item });
-  }, [dispatch, item]);
+  }, [dispatch, item, outOfStock, quantity, stock]);
 
   const handleIncrement = useCallback(() => {
+    if (quantity >= stock) return;
     dispatch({ type: 'INCREMENT', payload: item.id });
-  }, [dispatch, item.id]);
+  }, [dispatch, item.id, quantity, stock]);
 
   const handleDecrement = useCallback(() => {
     dispatch({ type: 'DECREMENT', payload: item.id });
@@ -38,7 +47,7 @@ const FoodCard = memo(function FoodCard({ item, index = 0 }) {
 
   return (
     <motion.div
-      className="food-card"
+      className={`food-card ${outOfStock ? 'food-card--out-of-stock' : ''}`}
       initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{
@@ -69,7 +78,8 @@ const FoodCard = memo(function FoodCard({ item, index = 0 }) {
         >
           {fav ? <IoHeart /> : <IoHeartOutline />}
         </button>
-        {item.isPopular && <span className="popular-badge">Popular</span>}
+        {item.isPopular && !outOfStock && <span className="popular-badge">Popular</span>}
+        {outOfStock && <span className="out-of-stock-badge">Out of Stock</span>}
       </div>
 
       {/* Info */}
@@ -88,6 +98,13 @@ const FoodCard = memo(function FoodCard({ item, index = 0 }) {
           <span>({item.reviewCount})</span>
         </div>
 
+        {/* Stock Badge */}
+        {lowStock && (
+          <div className="food-card__stock-badge food-card__stock-badge--low">
+            🔥 Only {stock} left!
+          </div>
+        )}
+
         {/* Price + Add/Stepper */}
         <div className="food-card__bottom">
           <span className="food-card__price">
@@ -95,7 +112,16 @@ const FoodCard = memo(function FoodCard({ item, index = 0 }) {
             {item.price}
           </span>
 
-          {quantity === 0 ? (
+          {outOfStock ? (
+            <button
+              className="add-btn add-btn--disabled"
+              type="button"
+              disabled
+              aria-label={`${item.name} is out of stock`}
+            >
+              Unavailable
+            </button>
+          ) : quantity === 0 ? (
             <motion.button
               className="add-btn add-btn--add"
               onClick={handleAdd}
@@ -134,7 +160,9 @@ const FoodCard = memo(function FoodCard({ item, index = 0 }) {
                 className="add-btn__step"
                 onClick={handleIncrement}
                 type="button"
+                disabled={quantity >= stock}
                 aria-label={`Increase ${item.name} quantity`}
+                style={quantity >= stock ? { opacity: 0.35, cursor: 'not-allowed' } : {}}
               >
                 +
               </button>

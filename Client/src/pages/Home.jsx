@@ -4,16 +4,19 @@ import Header from '../components/layout/Header';
 import CategoryFilter from '../components/food/CategoryFilter';
 import FoodCard from '../components/food/FoodCard';
 import { menuItems } from '../data/menuItems';
+import { useLocation } from '../context/LocationContext';
+import { HiLocationMarker } from 'react-icons/hi';
 
 /**
  * Home page — main menu exploration view.
- * Features: search, category filter, animated food card list.
+ * Features: search, category filter, location banner, animated food card list.
  */
 export default function Home() {
   const [category, setCategory] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [debouncedQuery, setDebouncedQuery] = useState('');
   const debounceTimer = useRef(null);
+  const { selectedLocation } = useLocation();
 
   // Debounce search by 300ms to avoid excessive filtering
   const handleSearch = useCallback((query) => {
@@ -55,6 +58,22 @@ export default function Home() {
     <>
       <Header onSearch={handleSearch} />
       <div className="page-content">
+        {/* Location Banner */}
+        <motion.div
+          className="location-banner"
+          key={selectedLocation.id}
+          initial={{ opacity: 0, y: -8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.3 }}
+        >
+          <HiLocationMarker className="location-banner__icon" />
+          <span className="location-banner__text">
+            Browsing menu for <strong>{selectedLocation.name}</strong>
+          </span>
+          <span className="location-banner__dot" />
+          <span className="location-banner__address">{selectedLocation.address}</span>
+        </motion.div>
+
         {/* Explore Menu Title */}
         <motion.div
           className="explore-menu"

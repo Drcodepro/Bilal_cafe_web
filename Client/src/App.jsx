@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 import { CartProvider } from './context/CartContext';
 import { FavouritesProvider } from './context/FavouritesContext';
+import { LocationProvider } from './context/LocationContext';
 import { ErrorBoundary } from './components/common/ErrorBoundary';
 import BottomNav from './components/layout/BottomNav';
 import SideMenu from './components/layout/SideMenu';
@@ -59,18 +60,20 @@ export default function App() {
 
   return (
     <ErrorBoundary>
-      <CartProvider>
-        <FavouritesProvider>
-          <BrowserRouter>
-            <div className="app-layout">
-              <AnimatedRoutes />
-              <CartPopupBar />
-              <BottomNav isMenuOpen={isMenuOpen} onMenuToggle={() => { console.log("onMenuToggle clicked! Old state:", isMenuOpen); setIsMenuOpen(!isMenuOpen); }} />
-              <SideMenu isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} />
-            </div>
-          </BrowserRouter>
-        </FavouritesProvider>
-      </CartProvider>
+      <LocationProvider>
+        <CartProvider>
+          <FavouritesProvider>
+            <BrowserRouter>
+              <div className="app-layout">
+                <AnimatedRoutes />
+                <CartPopupBar />
+                <BottomNav isMenuOpen={isMenuOpen} onMenuToggle={() => { console.log("onMenuToggle clicked! Old state:", isMenuOpen); setIsMenuOpen(!isMenuOpen); }} />
+                <SideMenu isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} />
+              </div>
+            </BrowserRouter>
+          </FavouritesProvider>
+        </CartProvider>
+      </LocationProvider>
     </ErrorBoundary>
   );
 }

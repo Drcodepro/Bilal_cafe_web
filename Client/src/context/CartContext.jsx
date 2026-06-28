@@ -60,6 +60,9 @@ function cartReducer(state, action) {
     case 'CLEAR_CART':
       return { ...state, items: [] };
 
+    case 'SET_LOCATION_ID':
+      return { ...state, locationId: action.payload };
+
     default:
       throw new Error(`Unknown cart action: ${action.type}`);
   }
@@ -67,6 +70,7 @@ function cartReducer(state, action) {
 
 const initialState = {
   items: [],
+  locationId: null,
 };
 
 export function CartProvider({ children }) {
